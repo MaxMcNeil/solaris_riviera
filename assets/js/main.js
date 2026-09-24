@@ -323,6 +323,47 @@
     onScroll();
   }
 
+  /* ---------- Intro carousel (hero / objectif / positionnement) ---------- */
+  function initCarousel(){
+    var track = document.querySelector(".carousel-track");
+    if(!track) return;
+    var slides = Array.prototype.slice.call(track.querySelectorAll(".carousel-slide"));
+    var dots = Array.prototype.slice.call(document.querySelectorAll(".carousel-dot"));
+    var prevBtn = document.querySelector(".carousel-arrow--prev");
+    var nextBtn = document.querySelector(".carousel-arrow--next");
+    if(!slides.length) return;
+
+    function activeIndex(){
+      var w = track.clientWidth || 1;
+      return Math.round(track.scrollLeft / w);
+    }
+    function update(){
+      var idx = activeIndex();
+      dots.forEach(function(d,i){ d.classList.toggle("is-active", i === idx); });
+      if(prevBtn) prevBtn.classList.toggle("is-disabled", idx === 0);
+      if(nextBtn) nextBtn.classList.toggle("is-disabled", idx === slides.length - 1);
+    }
+    function goTo(i){
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+    }
+
+    var ticking = false;
+    track.addEventListener("scroll", function(){
+      if(!ticking){
+        window.requestAnimationFrame(function(){ update(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    dots.forEach(function(d, i){ d.addEventListener("click", function(){ goTo(i); }); });
+    if(prevBtn) prevBtn.addEventListener("click", function(){ goTo(activeIndex() - 1); });
+    if(nextBtn) nextBtn.addEventListener("click", function(){ goTo(activeIndex() + 1); });
+    window.addEventListener("resize", function(){ goTo(activeIndex()); });
+
+    update();
+  }
+
   document.addEventListener("DOMContentLoaded", function(){
     applyI18n();
     initMobileNav();
@@ -332,5 +373,6 @@
     initObjectiveCards();
     initSimulator();
     initActiveNav();
+    initCarousel();
   });
 })();
