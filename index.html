@@ -3,27 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SOLARIS — Photovoltaïque, sécurité et domotique</title>
-<meta name="description" content="SOLARIS conçoit une solution unique pour produire votre énergie, protéger votre habitation et piloter vos équipements.">
+<title>SOLARIS — Photovoltaïque, sécurité et domotique | Côte d'Azur & Riviera</title>
+<meta name="description" content="SOLARIS installe photovoltaïque, alarme, vidéosurveillance et domotique sur la Côte d'Azur (Beausoleil, Menton, Monaco, Nice) et la Riviera ligure (Sanremo, Imperia). Étude personnalisée, un seul interlocuteur.">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32">
 <link rel="icon" href="assets/img/favicon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<link rel="canonical" href="https://solaris.example/">
+<link rel="canonical" href="https://maxmcneil.github.io/solaris/">
 <meta property="og:title" content="SOLARIS — Produire. Protéger. Piloter.">
-<meta property="og:description" content="Photovoltaïque, sécurité et domotique réunis dans une seule installation pensée pour votre habitat.">
+<meta property="og:description" content="Photovoltaïque, sécurité et domotique réunis dans une seule installation pensée pour votre habitat, sur la Côte d'Azur et la Riviera ligure.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/img/logo-full.webp">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="it_IT">
 <link rel="stylesheet" href="assets/css/style.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  "name": "SOLARIS",
-  "description": "Installation photovoltaïque, sécurité et domotique pour l'habitat.",
-  "areaServed": "FR",
-  "sameAs": []
+  "@graph": [
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": "https://maxmcneil.github.io/solaris/#fr",
+      "name": "SOLARIS",
+      "image": "https://maxmcneil.github.io/solaris/assets/img/logo-full.webp",
+      "url": "https://maxmcneil.github.io/solaris/",
+      "description": "Installation photovoltaïque, sécurité et domotique pour l'habitat sur la Côte d'Azur.",
+      "telephone": "+393513866250",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "29 boulevard du Général Leclerc",
+        "addressLocality": "Beausoleil",
+        "postalCode": "06240",
+        "addressCountry": "FR"
+      },
+      "areaServed": ["Beausoleil", "Menton", "Monaco", "Nice", "Roquebrune-Cap-Martin", "Côte d'Azur", "Alpes-Maritimes"]
+    },
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": "https://maxmcneil.github.io/solaris/#it",
+      "name": "SOLARIS",
+      "image": "https://maxmcneil.github.io/solaris/assets/img/logo-full.webp",
+      "url": "https://maxmcneil.github.io/solaris/",
+      "description": "Impianti fotovoltaici, sicurezza e domotica per la casa sulla Riviera ligure.",
+      "telephone": "+393513866250",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "55 Via Martiri della Libertà",
+        "addressLocality": "Sanremo",
+        "addressRegion": "IM",
+        "postalCode": "18038",
+        "addressCountry": "IT"
+      },
+      "areaServed": ["Sanremo", "Imperia", "Ventimiglia", "Riviera ligure"]
+    }
+  ]
 }
 </script>
 </head>
@@ -177,6 +213,9 @@
   <section class="section section--raised">
     <div class="container hub-wrap">
       <div class="hub">
+        <div class="hub-center">
+          <img src="assets/img/logo-emblem.webp" alt="SOLARIS">
+        </div>
         <svg class="hub-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <line x1="50" y1="50" x2="50" y2="6" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
           <line x1="50" y1="50" x2="10" y2="90" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
@@ -184,21 +223,18 @@
         </svg>
         <div class="hub-node hub-node--sun">
           <span class="ico">☀️</span>
-          <b data-i18n="hub.sun.title">Produire</b>
-          <span data-i18n="hub.sun.text">Photovoltaïque</span>
+          <div><b data-i18n="hub.sun.title">Produire</b>
+          <span data-i18n="hub.sun.text">Photovoltaïque</span></div>
         </div>
         <div class="hub-node hub-node--shield">
           <span class="ico">🛡️</span>
-          <b data-i18n="hub.shield.title">Protéger</b>
-          <span data-i18n="hub.shield.text">Sécurité</span>
+          <div><b data-i18n="hub.shield.title">Protéger</b>
+          <span data-i18n="hub.shield.text">Sécurité</span></div>
         </div>
         <div class="hub-node hub-node--bolt">
           <span class="ico">⚡</span>
-          <b data-i18n="hub.bolt.title">Piloter</b>
-          <span data-i18n="hub.bolt.text">Domotique</span>
-        </div>
-        <div class="hub-center">
-          <img src="assets/img/logo-emblem.webp" alt="SOLARIS">
+          <div><b data-i18n="hub.bolt.title">Piloter</b>
+          <span data-i18n="hub.bolt.text">Domotique</span></div>
         </div>
       </div>
       <div class="hub-copy">
@@ -498,7 +534,19 @@
           <li><a href="confidentialite.html" data-i18n="footer.legal2">Politique de confidentialité</a></li>
         </ul>
       </div>
+      <div class="footer-col">
+        <h4 data-i18n="contact.addresses_title">Nos adresses</h4>
+        <address>
+          <b data-i18n="contact.address_fr_label">France — Beausoleil</b>
+          29 bd du Général Leclerc<br>06240 Beausoleil, France
+        </address>
+        <address>
+          <b data-i18n="contact.address_it_label">Italie — Sanremo</b>
+          55 Via Martiri della Libertà<br>18038 Sanremo (IM), Italie
+        </address>
+      </div>
     </div>
+    <p class="footer-areas" data-i18n="footer.areas">Intervention sur la Côte d'Azur (Beausoleil, Menton, Monaco, Nice) et la Riviera ligure (Sanremo, Imperia).</p>
     <div class="footer-bottom">
       <span data-i18n="footer.rights">© SOLARIS</span>
       <span>SOLARIS — Produire. Protéger. Piloter.</span>

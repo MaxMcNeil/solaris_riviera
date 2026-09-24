@@ -51,7 +51,7 @@ Le simulateur (`#simulateur` sur la page d'accueil) est un parcours en 5 étapes
 - **Mentions légales / confidentialité** : remplacer les champs `[à compléter]` (raison sociale, SIREN, adresse) — à faire valider par un professionnel du droit.
 - **Réalisations** : remplacer les vignettes d'exemple par de vraies photos de chantier (section « Réalisations » de la page d'accueil).
 - **Avis clients** : la section est volontairement vide (aucun avis n'est inventé). Elle peut être remplacée par un widget Google Avis une fois la fiche établissement disponible.
-- **Domaine et `og:image`** : remplacer `https://solaris.example/` par le domaine réel dans les balises `<link rel="canonical">`, `sitemap.xml` et `robots.txt`.
+- **Domaine** : les URL canoniques, `sitemap.xml`, `robots.txt` et les données structurées pointent vers `https://maxmcneil.github.io/solaris/` (déduit du nom du dépôt). Si le site est finalement publié ailleurs ou sur un domaine personnalisé, remplacez cette URL partout (recherche/remplace global dans les fichiers `.html`, `sitemap.xml`, `robots.txt`).
 - **Analytics** : aucun outil de mesure n'est installé par défaut. Le bandeau cookies (`assets/js/main.js`, `initCookieBar`) est prêt à conditionner le chargement d'un outil compatible RGPD si besoin.
 
 ## Performance
