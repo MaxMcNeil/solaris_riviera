@@ -5,8 +5,8 @@
 window.SOLARIS_I18N = {
 
   fr: {
-    "meta.title": "SOLARIS — Photovoltaïque, sécurité et domotique pour votre habitat",
-    "meta.desc": "SOLARIS conçoit une solution unique pour produire votre énergie, protéger votre habitation et piloter vos équipements. Étude personnalisée, un seul interlocuteur.",
+    "meta.title": "SOLARIS — Photovoltaïque, sécurité et domotique | Côte d'Azur & Riviera",
+    "meta.desc": "SOLARIS installe photovoltaïque, alarme, vidéosurveillance et domotique sur la Côte d'Azur (Beausoleil, Menton, Monaco, Nice) et la Riviera ligure (Sanremo, Imperia). Étude personnalisée, un seul interlocuteur.",
 
     "nav.home": "Accueil",
     "nav.solar": "Photovoltaïque",
@@ -269,19 +269,35 @@ window.SOLARIS_I18N = {
 
     "back_home": "Retour à l'accueil",
 
+    "pack.badge": "Nouveau",
+    "pack.title": "Le pack caméra & alarme 100 % solaire",
+    "pack.lede": "Le pack SOLARIS carbure entièrement à l'énergie solaire. Aucun câblage électrique, aucun coût de fonctionnement, une protection qui tient même là où le réseau ne va pas.",
+    "pack.item1.title": "Autonomie totale",
+    "pack.item1.text": "Alimenté uniquement par le soleil, le pack fonctionne sans raccordement électrique et sans surcoût sur votre facture — y compris sur un site isolé ou en cas de coupure de courant.",
+    "pack.item2.title": "Vous voyez tout, en direct",
+    "pack.item2.text": "Consultez vos caméras en temps réel depuis votre smartphone, où que vous soyez, et gardez un œil sur votre bien à distance.",
+    "pack.item3.title": "L'alerte part immédiatement",
+    "pack.item3.text": "Dès qu'une intrusion est détectée, vous recevez une notification instantanée, qui peut être relayée aux forces de l'ordre pour une réaction la plus rapide possible.",
+    "pack.cta": "Découvrir le pack solaire",
+
+    "contact.addresses_title": "Nos adresses",
+    "contact.address_fr_label": "France — Beausoleil",
+    "contact.address_it_label": "Italie — Sanremo",
+    "footer.areas": "Intervention sur la Côte d'Azur (Beausoleil, Menton, Monaco, Nice) et la Riviera ligure (Sanremo, Imperia).",
+
     "pv.meta_title": "Photovoltaïque — SOLARIS",
-    "pv.meta_desc": "Installation photovoltaïque sur mesure : autoconsommation, monitoring et gestion intelligente de l'énergie avec SOLARIS.",
+    "pv.meta_desc": "Installation photovoltaïque sur mesure à Beausoleil, Menton, Monaco, Nice et Sanremo : autoconsommation, monitoring et gestion intelligente de l'énergie avec SOLARIS.",
     "sec.meta_title": "Sécurité — SOLARIS",
-    "sec.meta_desc": "Alarme, vidéosurveillance et contrôle à distance installés et configurés par SOLARIS.",
+    "sec.meta_desc": "Alarme, vidéosurveillance et contrôle à distance, y compris en pack 100% solaire autonome, installés par SOLARIS sur la Côte d'Azur et la Riviera ligure.",
     "dom.meta_title": "Domotique — SOLARIS",
-    "dom.meta_desc": "Automatisez votre maison et connectez-la à votre production solaire avec la domotique SOLARIS.",
+    "dom.meta_desc": "Automatisez votre maison à Beausoleil, Monaco, Nice ou Sanremo et connectez-la à votre production solaire avec la domotique SOLARIS.",
     "legal.meta_title": "Mentions légales — SOLARIS",
     "privacy.meta_title": "Politique de confidentialité — SOLARIS"
   },
 
   en: {
-    "meta.title": "SOLARIS — Solar power, security and smart home for your home",
-    "meta.desc": "SOLARIS designs one solution to produce your own energy, protect your home and control your equipment. Personalised study, a single point of contact.",
+    "meta.title": "SOLARIS — Solar power, security and smart home | Côte d'Azur & Riviera",
+    "meta.desc": "SOLARIS installs solar power, alarm, video surveillance and smart home systems on the Côte d'Azur (Beausoleil, Menton, Monaco, Nice) and the Italian Riviera (Sanremo, Imperia). Personalised study, a single point of contact.",
 
     "nav.home": "Home",
     "nav.solar": "Solar power",
@@ -544,19 +560,35 @@ window.SOLARIS_I18N = {
 
     "back_home": "Back to home",
 
+    "pack.badge": "New",
+    "pack.title": "The 100% solar camera & alarm pack",
+    "pack.lede": "The SOLARIS pack runs entirely on solar power. No wiring, no running costs, protection that holds even where the grid doesn't reach.",
+    "pack.item1.title": "Fully self-sufficient",
+    "pack.item1.text": "Powered only by the sun, the pack works with no electrical connection and no extra cost on your bill — even on an isolated site or during a power cut.",
+    "pack.item2.title": "See everything, live",
+    "pack.item2.text": "Check your cameras in real time from your smartphone, wherever you are, and keep an eye on your property remotely.",
+    "pack.item3.title": "The alert goes out immediately",
+    "pack.item3.text": "The moment an intrusion is detected, you get an instant notification, which can be relayed to the police for the fastest possible response.",
+    "pack.cta": "Discover the solar pack",
+
+    "contact.addresses_title": "Our locations",
+    "contact.address_fr_label": "France — Beausoleil",
+    "contact.address_it_label": "Italy — Sanremo",
+    "footer.areas": "Serving the Côte d'Azur (Beausoleil, Menton, Monaco, Nice) and the Italian Riviera (Sanremo, Imperia).",
+
     "pv.meta_title": "Solar power — SOLARIS",
-    "pv.meta_desc": "Custom solar installations: self-consumption, monitoring and smart energy management with SOLARIS.",
+    "pv.meta_desc": "Custom solar installations in Beausoleil, Menton, Monaco, Nice and Sanremo: self-consumption, monitoring and smart energy management with SOLARIS.",
     "sec.meta_title": "Security — SOLARIS",
-    "sec.meta_desc": "Alarm, video surveillance and remote control, installed and configured by SOLARIS.",
+    "sec.meta_desc": "Alarm, video surveillance and remote control, including a fully solar-powered off-grid pack, installed by SOLARIS on the Côte d'Azur and Italian Riviera.",
     "dom.meta_title": "Smart home — SOLARIS",
-    "dom.meta_desc": "Automate your home and connect it to your solar production with SOLARIS smart home control.",
+    "dom.meta_desc": "Automate your home in Beausoleil, Monaco, Nice or Sanremo and connect it to your solar production with SOLARIS smart home control.",
     "legal.meta_title": "Legal notice — SOLARIS",
     "privacy.meta_title": "Privacy policy — SOLARIS"
   },
 
   it: {
-    "meta.title": "SOLARIS — Fotovoltaico, sicurezza e domotica per la tua casa",
-    "meta.desc": "SOLARIS progetta un'unica soluzione per produrre la tua energia, proteggere la tua casa e controllare i tuoi impianti. Studio personalizzato, un solo interlocutore.",
+    "meta.title": "SOLARIS — Fotovoltaico, sicurezza e domotica | Costa Azzurra e Riviera",
+    "meta.desc": "SOLARIS installa fotovoltaico, allarme, videosorveglianza e domotica sulla Costa Azzurra (Beausoleil, Mentone, Monaco, Nizza) e sulla Riviera ligure (Sanremo, Imperia). Studio personalizzato, un solo interlocutore.",
 
     "nav.home": "Home",
     "nav.solar": "Fotovoltaico",
@@ -819,12 +851,28 @@ window.SOLARIS_I18N = {
 
     "back_home": "Torna alla home",
 
+    "pack.badge": "Novità",
+    "pack.title": "Il pack videocamera & allarme 100% solare",
+    "pack.lede": "Il pack SOLARIS funziona interamente a energia solare. Nessun cablaggio, nessun costo di esercizio, una protezione che regge anche dove la rete elettrica non arriva.",
+    "pack.item1.title": "Autonomia totale",
+    "pack.item1.text": "Alimentato solo dal sole, il pack funziona senza allaccio elettrico e senza costi aggiuntivi in bolletta — anche in un sito isolato o durante un blackout.",
+    "pack.item2.title": "Vedi tutto, in diretta",
+    "pack.item2.text": "Controlla le tue telecamere in tempo reale dallo smartphone, ovunque tu sia, e tieni d'occhio la tua proprietà a distanza.",
+    "pack.item3.title": "L'allarme parte subito",
+    "pack.item3.text": "Non appena viene rilevata un'intrusione, ricevi una notifica istantanea, che può essere inoltrata alle forze dell'ordine per una risposta il più rapida possibile.",
+    "pack.cta": "Scopri il pack solare",
+
+    "contact.addresses_title": "Le nostre sedi",
+    "contact.address_fr_label": "Francia — Beausoleil",
+    "contact.address_it_label": "Italia — Sanremo",
+    "footer.areas": "Interventi sulla Costa Azzurra (Beausoleil, Mentone, Monaco, Nizza) e sulla Riviera ligure (Sanremo, Imperia).",
+
     "pv.meta_title": "Fotovoltaico — SOLARIS",
-    "pv.meta_desc": "Impianti fotovoltaici su misura: autoconsumo, monitoraggio e gestione intelligente dell'energia con SOLARIS.",
+    "pv.meta_desc": "Impianti fotovoltaici su misura a Beausoleil, Mentone, Monaco, Nizza e Sanremo: autoconsumo, monitoraggio e gestione intelligente dell'energia con SOLARIS.",
     "sec.meta_title": "Sicurezza — SOLARIS",
-    "sec.meta_desc": "Allarme, videosorveglianza e controllo da remoto, installati e configurati da SOLARIS.",
+    "sec.meta_desc": "Allarme, videosorveglianza e controllo da remoto, anche in pack 100% solare autonomo, installati da SOLARIS sulla Costa Azzurra e la Riviera ligure.",
     "dom.meta_title": "Domotica — SOLARIS",
-    "dom.meta_desc": "Automatizza la tua casa e collegala alla tua produzione solare con la domotica SOLARIS.",
+    "dom.meta_desc": "Automatizza la tua casa a Beausoleil, Monaco, Nizza o Sanremo e collegala alla tua produzione solare con la domotica SOLARIS.",
     "legal.meta_title": "Note legali — SOLARIS",
     "privacy.meta_title": "Informativa sulla privacy — SOLARIS"
   }
