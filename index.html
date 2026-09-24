@@ -69,7 +69,7 @@
   <div class="container bar">
     <a href="index.html" class="brand">
       <img src="assets/img/logo-emblem.webp" alt="SOLARIS" width="38" height="38">
-      <span class="brand-text"><b>SOLARIS</b><span>ÉNERGIE • SÉCURITÉ • DOMOTIQUE</span></span>
+      <span class="brand-text"><b>SOLARIS</b><span data-i18n="header.tagline">ÉNERGIE • SÉCURITÉ • DOMOTIQUE</span></span>
     </a>
     <nav class="main-nav" aria-label="Navigation principale">
       <ul>
@@ -117,135 +117,114 @@
 
 <main>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <h1 class="h1">
-          <span data-i18n="hero.title_l1">Votre maison produit.</span><br>
-          <span data-i18n="hero.title_l2">Votre maison se protège.</span><br>
-          <em data-i18n="hero.title_l3">Vous gardez le contrôle.</em>
-        </h1>
-        <p class="lede" style="margin-top:18px" data-i18n="hero.lede">Photovoltaïque, sécurité et domotique réunis dans une seule installation pensée pour votre habitat.</p>
-        <div class="hero-actions">
-          <a href="#simulateur" class="btn btn-gold btn-lg">🟠 <span data-i18n="hero.cta_primary">Calculer mon projet</span></a>
-          <a href="#" class="btn btn-ghost btn-lg" data-wa-call>📞 <span data-i18n="hero.cta_secondary">Parler à un expert</span></a>
-        </div>
-        <p class="microcopy" data-i18n="hero.microcopy">Étude personnalisée · Installation professionnelle · Un seul interlocuteur</p>
+  <!-- INTRO CAROUSEL: Hero / Objectif / Positionnement -->
+  <section class="hero intro-carousel" id="objectif">
+    <div class="carousel-track" role="region" aria-roledescription="carousel" aria-label="Présentation SOLARIS" tabindex="0">
 
-        <div class="trust-strip">
-          <div class="trust-item">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="trust.1">Étude personnalisée</span>
+      <div class="carousel-slide">
+        <div class="slide-inner">
+          <h1 class="h1">
+            <span data-i18n="hero.title_l1">Votre maison produit.</span><br>
+            <span data-i18n="hero.title_l2">Votre maison se protège.</span><br>
+            <em data-i18n="hero.title_l3">Vous gardez le contrôle.</em>
+          </h1>
+          <p class="lede" style="margin:18px auto 0" data-i18n="hero.lede">Photovoltaïque, sécurité et domotique réunis dans une seule installation pensée pour votre habitat.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="#simulateur" class="btn btn-gold btn-lg">🟠 <span data-i18n="hero.cta_primary">Calculer mon projet</span></a>
+            <a href="#" class="btn btn-ghost btn-lg" data-wa-call>📞 <span data-i18n="hero.cta_secondary">Parler à un expert</span></a>
           </div>
-          <div class="trust-item">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="trust.2">Installation professionnelle</span>
-          </div>
-          <div class="trust-item">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="trust.3">Matériel professionnel</span>
-          </div>
-          <div class="trust-item">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="trust.4">Un seul interlocuteur</span>
+          <p class="microcopy" data-i18n="hero.microcopy">Étude personnalisée · Installation professionnelle · Un seul interlocuteur</p>
+
+          <div class="trust-strip">
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="trust.1">Étude personnalisée</span>
+            </div>
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="trust.2">Installation professionnelle</span>
+            </div>
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="trust.3">Matériel professionnel</span>
+            </div>
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="trust.4">Un seul interlocuteur</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="hero-visual" aria-hidden="true">
-        <svg viewBox="0 0 400 400" width="100%" height="100%">
-          <defs>
-            <radialGradient id="glowGold" cx="50%" cy="35%" r="60%">
-              <stop offset="0%" stop-color="#f2a531" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#f2a531" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="glowBlue" cx="50%" cy="70%" r="55%">
-              <stop offset="0%" stop-color="#3a8bff" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="#3a8bff" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <circle cx="200" cy="200" r="190" fill="url(#glowGold)"/>
-          <circle cx="200" cy="200" r="190" fill="url(#glowBlue)"/>
-          <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-          <circle cx="200" cy="200" r="112" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-        </svg>
-        <img src="assets/img/logo-emblem.webp" alt="" width="220" height="194"
-             style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:56%; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));">
+      <div class="carousel-slide">
+        <div class="slide-inner">
+          <span class="eyebrow" data-i18n="objective.eyebrow">Votre projet</span>
+          <h2 class="h2 center" data-i18n="objective.title">Qu'avez-vous envie d'améliorer ?</h2>
+          <p class="lede" style="margin:14px auto 22px" data-i18n="objective.lede">Chaque habitation est différente. Commencez par nous dire ce que vous recherchez.</p>
+          <div class="objective-grid">
+            <div class="objective-card" data-sim-goal="bill" role="button" tabindex="0">
+              <span class="ico">☀️</span>
+              <h3 data-i18n="objective.card1.title">Réduire ma facture</h3>
+              <p data-i18n="objective.card1.text">Je veux produire et mieux utiliser ma propre énergie.</p>
+            </div>
+            <div class="objective-card" data-sim-goal="secure" role="button" tabindex="0">
+              <span class="ico">🛡️</span>
+              <h3 data-i18n="objective.card2.title">Sécuriser mon habitation</h3>
+              <p data-i18n="objective.card2.text">Je veux protéger ma maison et garder le contrôle à distance.</p>
+            </div>
+            <div class="objective-card" data-sim-goal="automate" role="button" tabindex="0">
+              <span class="ico">⚡</span>
+              <h3 data-i18n="objective.card3.title">Automatiser ma consommation</h3>
+              <p data-i18n="objective.card3.text">Je veux piloter intelligemment mes équipements.</p>
+            </div>
+            <div class="objective-card" data-sim-goal="all" role="button" tabindex="0">
+              <span class="ico">⭐</span>
+              <h3 data-i18n="objective.card4.title">Tout combiner</h3>
+              <p data-i18n="objective.card4.text">Je veux une solution globale pour mon habitat.</p>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="carousel-slide">
+        <div class="slide-inner">
+          <h2 class="h2 center">
+            <span data-i18n="hub.title_l1">Une seule installation.</span><br>
+            <span data-i18n="hub.title_l2">Un seul interlocuteur.</span>
+          </h2>
+          <p class="lede" style="margin:14px auto 26px" data-i18n="hub.lede">Pourquoi multiplier les intervenants quand votre énergie, votre sécurité et votre domotique peuvent être pensées comme un seul système ?</p>
+          <div class="hub-node hub-node--sun">
+            <span class="ico">☀️</span>
+            <div><b data-i18n="hub.sun.title">Produire</b>
+            <span data-i18n="hub.sun.text">Photovoltaïque</span></div>
+          </div>
+          <div class="hub-node hub-node--shield">
+            <span class="ico">🛡️</span>
+            <div><b data-i18n="hub.shield.title">Protéger</b>
+            <span data-i18n="hub.shield.text">Sécurité</span></div>
+          </div>
+          <div class="hub-node hub-node--bolt">
+            <span class="ico">⚡</span>
+            <div><b data-i18n="hub.bolt.title">Piloter</b>
+            <span data-i18n="hub.bolt.text">Domotique</span></div>
+          </div>
+          <a href="#simulateur" class="btn btn-electric" style="margin-top:6px" data-i18n="header.cta">Étudier mon projet</a>
+        </div>
+      </div>
+
     </div>
-  </section>
 
-  <!-- OBJECTIVE PICKER -->
-  <section class="section" id="objectif">
-    <div class="container">
-      <div class="section-head center">
-        <span class="eyebrow" data-i18n="objective.eyebrow">Votre projet</span>
-        <h2 class="h2 center" data-i18n="objective.title">Qu'avez-vous envie d'améliorer ?</h2>
-        <p class="lede" style="margin:14px auto 0" data-i18n="objective.lede">Chaque habitation est différente. Commencez par nous dire ce que vous recherchez.</p>
-      </div>
-      <div class="objective-grid">
-        <div class="objective-card" data-sim-goal="bill" role="button" tabindex="0">
-          <span class="ico">☀️</span>
-          <h3 data-i18n="objective.card1.title">Réduire ma facture</h3>
-          <p data-i18n="objective.card1.text">Je veux produire et mieux utiliser ma propre énergie.</p>
-        </div>
-        <div class="objective-card" data-sim-goal="secure" role="button" tabindex="0">
-          <span class="ico">🛡️</span>
-          <h3 data-i18n="objective.card2.title">Sécuriser mon habitation</h3>
-          <p data-i18n="objective.card2.text">Je veux protéger ma maison et garder le contrôle à distance.</p>
-        </div>
-        <div class="objective-card" data-sim-goal="automate" role="button" tabindex="0">
-          <span class="ico">⚡</span>
-          <h3 data-i18n="objective.card3.title">Automatiser ma consommation</h3>
-          <p data-i18n="objective.card3.text">Je veux piloter intelligemment mes équipements.</p>
-        </div>
-        <div class="objective-card" data-sim-goal="all" role="button" tabindex="0">
-          <span class="ico">⭐</span>
-          <h3 data-i18n="objective.card4.title">Tout combiner</h3>
-          <p data-i18n="objective.card4.text">Je veux une solution globale pour mon habitat.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <button type="button" class="carousel-arrow carousel-arrow--prev" aria-label="Précédent">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button type="button" class="carousel-arrow carousel-arrow--next" aria-label="Suivant">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 
-  <!-- POSITIONING HUB -->
-  <section class="section section--raised">
-    <div class="container hub-wrap">
-      <div class="hub">
-        <div class="hub-center">
-          <img src="assets/img/logo-emblem.webp" alt="SOLARIS">
-        </div>
-        <svg class="hub-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="50" y1="50" x2="50" y2="6" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
-          <line x1="50" y1="50" x2="10" y2="90" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
-          <line x1="50" y1="50" x2="90" y2="90" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
-        </svg>
-        <div class="hub-node hub-node--sun">
-          <span class="ico">☀️</span>
-          <div><b data-i18n="hub.sun.title">Produire</b>
-          <span data-i18n="hub.sun.text">Photovoltaïque</span></div>
-        </div>
-        <div class="hub-node hub-node--shield">
-          <span class="ico">🛡️</span>
-          <div><b data-i18n="hub.shield.title">Protéger</b>
-          <span data-i18n="hub.shield.text">Sécurité</span></div>
-        </div>
-        <div class="hub-node hub-node--bolt">
-          <span class="ico">⚡</span>
-          <div><b data-i18n="hub.bolt.title">Piloter</b>
-          <span data-i18n="hub.bolt.text">Domotique</span></div>
-        </div>
-      </div>
-      <div class="hub-copy">
-        <h2 class="h2">
-          <span data-i18n="hub.title_l1">Une seule installation.</span><br>
-          <span data-i18n="hub.title_l2">Un seul interlocuteur.</span>
-        </h2>
-        <p class="lede" data-i18n="hub.lede">Pourquoi multiplier les intervenants quand votre énergie, votre sécurité et votre domotique peuvent être pensées comme un seul système ?</p>
-        <p data-i18n="hub.conclusion">SOLARIS réunit ces trois univers autour d'un même objectif : un habitat plus autonome, plus intelligent et mieux protégé.</p>
-        <a href="#simulateur" class="btn btn-electric" data-i18n="header.cta">Étudier mon projet</a>
-      </div>
+    <div class="carousel-dots" role="tablist" aria-label="Diapositives">
+      <button type="button" class="carousel-dot" role="tab" aria-label="1"></button>
+      <button type="button" class="carousel-dot" role="tab" aria-label="2"></button>
+      <button type="button" class="carousel-dot" role="tab" aria-label="3"></button>
     </div>
   </section>
 
