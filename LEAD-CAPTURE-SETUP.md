@@ -98,7 +98,8 @@ when    lang    page    stepLabel    type    goal    budget    address    firstn
 
 `type`, `goal` et `budget` utilisent de courts codes internes (stables quelle
 que soit la langue du visiteur) : `individual/apartment/business/other` pour
-le type de projet, `bill/produce/secure/automate/all` pour l'objectif,
+le type de projet (ou `connect` si la demande vient du formulaire express
+SOLARIS Connect, auquel cas `goal` contient `home/car/office/all`), `bill/produce/secure/automate/all` pour l'objectif,
 `low/mid/high/veryhigh/unknown` pour la consommation mensuelle — reportés
 directement du simulateur du site.
 

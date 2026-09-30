@@ -16,6 +16,7 @@ Pour un nom de domaine personnalisé, ajoutez un fichier `CNAME` à la racine av
 
 ```
 index.html              Page d'accueil (funnel complet + simulateur)
+connect.html              SOLARIS Connect — domotique autonome + solaire, contrôle à distance (maison/voiture/bureaux), formulaire express 2 étapes
 photovoltaique.html      Page SEO Photovoltaïque
 securite.html             Page SEO Sécurité
 domotique.html            Page SEO Domotique
