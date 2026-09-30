@@ -6,6 +6,43 @@
 
   var WHATSAPP_NUMBER = "393513866250"; // +39 351 386 6250
 
+  // Optional lead-capture webhook (abandoned-form recovery). Leave empty and
+  // the feature quietly does nothing — the site works perfectly without it.
+  // Set this to a Google Apps Script Web App URL to log every prospect who
+  // starts the simulator (including those who don't finish) to a Google
+  // Sheet you can open or export to CSV/TXT at any time. Full setup guide:
+  // /LEAD-CAPTURE-SETUP.md
+  var LEAD_WEBHOOK_URL = "";
+
+  /* ---------- Lead capture (progressive + abandonment recovery) ---------- */
+  function sendLead(status, data, useBeacon){
+    if(!LEAD_WEBHOOK_URL) return; // not configured — no-op, see LEAD-CAPTURE-SETUP.md
+    var payload = {
+      status: status,                 // "in_progress" | "completed" | "abandoned"
+      lang: currentLang,
+      page: location.pathname,
+      when: new Date().toISOString(),
+      type: data.type || "",
+      goal: data.goal || "",
+      budget: data.budget || "",
+      address: data.address || "",
+      firstname: data.firstname || "",
+      lastname: data.lastname || "",
+      phone: data.phone || "",
+      email: data.email || "",
+      step: data.step || "",
+      totalSteps: data.totalSteps || ""
+    };
+    try{
+      var body = JSON.stringify(payload);
+      if(useBeacon && navigator.sendBeacon){
+        navigator.sendBeacon(LEAD_WEBHOOK_URL, new Blob([body], { type: "text/plain;charset=UTF-8" }));
+      } else {
+        fetch(LEAD_WEBHOOK_URL, { method: "POST", mode: "no-cors", keepalive: true, body: body });
+      }
+    }catch(e){ /* never let lead tracking break the site */ }
+  }
+
   /* ---------- i18n engine ---------- */
   function detectLang(){
     var saved = null;
@@ -96,20 +133,51 @@
   }
 
   /* ---------- Cookie banner ---------- */
+  /* Compliance note: auto-hiding the banner is NEVER treated as consent.
+     Only an explicit tap on "accept" records consent. If the banner is
+     auto-hidden or dismissed without a choice, no value is stored, so the
+     banner reappears next visit and no non-essential cookie is enabled.
+     A persistent reopen button lets the visitor decide at any time. */
   function initCookieBar(){
     var bar = document.querySelector(".cookie-bar");
+    var reopen = document.querySelector(".cookie-reopen");
     if(!bar) return;
     var consent = null;
     try{ consent = localStorage.getItem("solaris_cookie_consent"); }catch(e){}
-    if(!consent){
-      setTimeout(function(){ bar.classList.add("is-visible"); }, 600);
+
+    var autoHideTimer = null;
+
+    function show(){
+      bar.classList.add("is-visible");
+      requestAnimationFrame(function(){ bar.classList.add("is-shown"); });
+      autoHideTimer = setTimeout(dismiss, 8000);
     }
+    function dismiss(){
+      bar.classList.remove("is-shown");
+      setTimeout(function(){ bar.classList.remove("is-visible"); }, 300);
+      if(reopen) reopen.classList.add("is-visible");
+      if(autoHideTimer){ clearTimeout(autoHideTimer); autoHideTimer = null; }
+    }
+
+    if(!consent){
+      setTimeout(show, 600);
+    } else if(reopen){
+      reopen.classList.add("is-visible");
+    }
+
     bar.querySelectorAll("[data-cookie]").forEach(function(btn){
       btn.addEventListener("click", function(){
         try{ localStorage.setItem("solaris_cookie_consent", btn.getAttribute("data-cookie")); }catch(e){}
-        bar.classList.remove("is-visible");
+        dismiss();
       });
     });
+
+    if(reopen){
+      reopen.addEventListener("click", function(){
+        reopen.classList.remove("is-visible");
+        show();
+      });
+    }
   }
 
   /* ---------- WhatsApp helper ---------- */
@@ -169,6 +237,9 @@
     var backBtn = root.querySelector(".sim-back");
     var nextBtn = root.querySelector(".sim-next");
     var current = 0;
+    var autoAdvanceTimer = null;
+    var started = false;
+    var completed = false;
 
     var state = { type: null, goal: null, budget: null, address: "", firstname: "", lastname: "", phone: "", email: "" };
 
@@ -198,71 +269,7 @@
       return true;
     }
 
-    root.querySelectorAll(".choice").forEach(function(choice){
-      choice.addEventListener("click", function(){
-        var group = choice.closest(".choice-grid");
-        var field = group.getAttribute("data-field");
-        var value = choice.getAttribute("data-value");
-        group.querySelectorAll(".choice").forEach(function(c){ c.classList.remove("is-selected"); });
-        choice.classList.add("is-selected");
-        state[field] = value;
-      });
-    });
-
-    root.querySelectorAll("input[data-field]").forEach(function(input){
-      input.addEventListener("input", function(){
-        state[input.getAttribute("data-field")] = input.value.trim();
-      });
-    });
-
-    function buildRecap(){
-      var recap = root.querySelector(".recap");
-      if(!recap) return;
-      recap.innerHTML =
-        "<div><b>" + t("sim.recap.type") + ":</b> " + (state.type || "—") + "</div>" +
-        "<div><b>" + t("sim.recap.goal") + ":</b> " + (state.goal || "—") + "</div>" +
-        "<div><b>" + t("sim.recap.budget") + ":</b> " + (state.budget || "—") + "</div>" +
-        "<div><b>" + t("sim.recap.address") + ":</b> " + (state.address || "—") + "</div>";
-    }
-
-    function buildWaMessage(){
-      var lines = currentLang === "fr" ? [
-        "Bonjour SOLARIS, voici ma demande d'étude :",
-        "Type de projet : " + (state.type || "—"),
-        "Objectif : " + (state.goal || "—"),
-        "Consommation : " + (state.budget || "—"),
-        "Adresse : " + (state.address || "—"),
-        "Nom : " + (state.firstname || "") + " " + (state.lastname || ""),
-        "Téléphone : " + (state.phone || "—"),
-        "Email : " + (state.email || "—")
-      ] : [
-        "Hello SOLARIS, here is my study request:",
-        "Project type: " + (state.type || "—"),
-        "Goal: " + (state.goal || "—"),
-        "Energy spend: " + (state.budget || "—"),
-        "Address: " + (state.address || "—"),
-        "Name: " + (state.firstname || "") + " " + (state.lastname || ""),
-        "Phone: " + (state.phone || "—"),
-        "Email: " + (state.email || "—")
-      ];
-      return lines.join("\n");
-    }
-
-    function submit(){
-      buildRecap();
-      steps.forEach(function(s){ s.classList.remove("is-active"); });
-      root.querySelector(".sim-nav").style.display = "none";
-      root.querySelector(".sim-progress").style.display = "none";
-      successPanel.classList.add("is-active");
-      var waBtn = successPanel.querySelector("[data-wa-submit]");
-      if(waBtn){
-        waBtn.onclick = function(){
-          window.open(waLink(buildWaMessage()), "_blank", "noopener");
-        };
-      }
-    }
-
-    nextBtn.addEventListener("click", function(){
+    function advance(){
       if(!canAdvance(current)){
         var activeStep = root.querySelectorAll(".sim-step.is-active")[0];
         activeStep.classList.remove("shake");
@@ -272,7 +279,161 @@
       }
       if(current === steps.length - 1){ submit(); return; }
       showStep(current + 1);
+      sendLead("in_progress", snapshotState());
+    }
+
+    function selectChoice(choice, opts){
+      var group = choice.closest(".choice-grid");
+      var field = group.getAttribute("data-field");
+      var value = choice.getAttribute("data-value");
+      group.querySelectorAll(".choice").forEach(function(c){
+        c.classList.remove("is-selected");
+        c.setAttribute("aria-checked", "false");
+      });
+      choice.classList.add("is-selected");
+      choice.setAttribute("aria-checked", "true");
+      state[field] = value;
+      started = true;
+      if(!(opts && opts.silent)){
+        window.clearTimeout(autoAdvanceTimer);
+        autoAdvanceTimer = window.setTimeout(advance, 380); // brief pause so the selection is visible before advancing
+      }
+    }
+
+    root.querySelectorAll(".choice").forEach(function(choice){
+      choice.addEventListener("click", function(){ selectChoice(choice); });
+      choice.addEventListener("keydown", function(e){
+        if(e.key === "Enter" || e.key === " " || e.key === "Spacebar"){
+          e.preventDefault();
+          selectChoice(choice);
+        }
+      });
     });
+
+    root.querySelectorAll("input[data-field]").forEach(function(input){
+      input.addEventListener("input", function(){
+        state[input.getAttribute("data-field")] = input.value.trim();
+        started = true;
+      });
+    });
+
+    // Neutral keys stored in state.type/goal/budget (language-independent) →
+    // translated display text, resolved in the *current* language. This
+    // keeps the recap and the WhatsApp message consistent with whichever
+    // language the visitor was actually using, instead of always showing
+    // the French option label regardless of UI language.
+    var VALUE_LABELS = {
+      type:   { individual: "sim.s1.o1", apartment: "sim.s1.o2", business: "sim.s1.o3", other: "sim.s1.o4" },
+      goal:   { bill: "sim.s2.o1", produce: "sim.s2.o2", secure: "sim.s2.o3", automate: "sim.s2.o4", all: "sim.s2.o5" },
+      budget: { low: "sim.s3.o1", mid: "sim.s3.o2", high: "sim.s3.o3", veryhigh: "sim.s3.o4", unknown: "sim.s3.o5" }
+    };
+    function displayValue(field, key){
+      var map = VALUE_LABELS[field];
+      if(!map || !key || !map[key]) return "—";
+      return t(map[key]);
+    }
+
+    function buildRecap(){
+      var recap = root.querySelector(".recap");
+      if(!recap) return;
+      recap.innerHTML =
+        "<div><b>" + t("sim.recap.type") + ":</b> " + displayValue("type", state.type) + "</div>" +
+        "<div><b>" + t("sim.recap.goal") + ":</b> " + displayValue("goal", state.goal) + "</div>" +
+        "<div><b>" + t("sim.recap.budget") + ":</b> " + displayValue("budget", state.budget) + "</div>" +
+        "<div><b>" + t("sim.recap.address") + ":</b> " + (state.address || "—") + "</div>";
+    }
+
+    // Rough, clearly-labelled indicative ranges (EUR/year) — never a precise
+    // promise. Keyed on the stated consumption bracket; halved for
+    // "automate" (smart-home automation alone saves less than solar
+    // production). Security-only projects get no financial estimate at all
+    // — protection isn't a monetary gain and shouldn't be framed as one.
+    var ESTIMATE_RANGES = { low: [150, 350], mid: [400, 800], high: [800, 1400], veryhigh: [1200, 2200] };
+    var ENERGY_GOALS = ["bill", "produce", "all"];
+
+    function computeEstimate(){
+      var goal = state.goal, budget = state.budget;
+      var isEnergyGoal = ENERGY_GOALS.indexOf(goal) !== -1;
+      var isAutomateGoal = goal === "automate";
+      if(!isEnergyGoal && !isAutomateGoal) return { applicable: false };
+      var range = ESTIMATE_RANGES[budget];
+      if(!range) return { applicable: true, known: false };
+      var min = range[0], max = range[1];
+      if(isAutomateGoal){ min = Math.round(min * 0.45 / 10) * 10; max = Math.round(max * 0.45 / 10) * 10; }
+      return { applicable: true, known: true, min: min, max: max };
+    }
+
+    function buildEstimate(){
+      var box = root.querySelector(".estimate-box");
+      var valueEl = root.querySelector(".estimate-value");
+      if(!box || !valueEl) return;
+      var est = computeEstimate();
+      if(!est.applicable){ box.style.display = "none"; return; }
+      box.style.display = "block";
+      if(est.known){
+        valueEl.textContent = est.min + " € – " + est.max + " € / " + (currentLang === "en" ? "yr" : "an");
+      } else {
+        valueEl.textContent = t("sim.estimate.unknown");
+      }
+    }
+
+    function buildWaMessage(){
+      var lines = currentLang === "fr" ? [
+        "Bonjour SOLARIS, voici ma demande d'étude :",
+        "Type de projet : " + displayValue("type", state.type),
+        "Objectif : " + displayValue("goal", state.goal),
+        "Consommation : " + displayValue("budget", state.budget),
+        "Adresse : " + (state.address || "—"),
+        "Nom : " + (state.firstname || "") + " " + (state.lastname || ""),
+        "Téléphone : " + (state.phone || "—"),
+        "Email : " + (state.email || "—")
+      ] : [
+        "Hello SOLARIS, here is my study request:",
+        "Project type: " + displayValue("type", state.type),
+        "Goal: " + displayValue("goal", state.goal),
+        "Energy spend: " + displayValue("budget", state.budget),
+        "Address: " + (state.address || "—"),
+        "Name: " + (state.firstname || "") + " " + (state.lastname || ""),
+        "Phone: " + (state.phone || "—"),
+        "Email: " + (state.email || "—")
+      ];
+      return lines.join("\n");
+    }
+
+    function snapshotState(){
+      var s = {};
+      for(var k in state){ s[k] = state[k]; }
+      s.step = current + 1;
+      s.totalSteps = steps.length;
+      return s;
+    }
+
+    function submit(){
+      buildRecap();
+      buildEstimate();
+      steps.forEach(function(s){ s.classList.remove("is-active"); });
+      root.querySelector(".sim-nav").style.display = "none";
+      root.querySelector(".sim-progress").style.display = "none";
+      successPanel.classList.add("is-active");
+      completed = true;
+
+      // Open WhatsApp immediately — no extra click required. This still runs
+      // synchronously inside the button's click handler, so browsers treat
+      // it as a direct result of the user's action and won't block it.
+      window.open(waLink(buildWaMessage()), "_blank", "noopener");
+      sendLead("completed", snapshotState());
+
+      var waBtn = successPanel.querySelector("[data-wa-submit]");
+      if(waBtn){
+        // Kept as a manual fallback in case the automatic opening was blocked
+        // by the browser or the visitor closed the WhatsApp tab by mistake.
+        waBtn.onclick = function(){
+          window.open(waLink(buildWaMessage()), "_blank", "noopener");
+        };
+      }
+    }
+
+    nextBtn.addEventListener("click", advance);
 
     backBtn.addEventListener("click", function(){
       if(current > 0) showStep(current - 1);
@@ -287,6 +448,19 @@
       });
     }
 
+    // Recover an abandoned form: if the visitor leaves or hides the tab after
+    // starting the simulator but before finishing it, send one last snapshot
+    // with sendBeacon (works during unload, no click required).
+    function handleLeaveIfAbandoned(){
+      if(started && !completed){
+        sendLead("abandoned", snapshotState(), true);
+      }
+    }
+    document.addEventListener("visibilitychange", function(){
+      if(document.visibilityState === "hidden") handleLeaveIfAbandoned();
+    });
+    window.addEventListener("pagehide", handleLeaveIfAbandoned);
+
     window.SOLARIS_SIM = {
       presetGoal: function(goalKey){
         var map = {
@@ -296,10 +470,14 @@
         if(idx === undefined) return;
         var group = steps[1].querySelector(".choice-grid");
         var choice = group.querySelectorAll(".choice")[idx];
-        if(choice){ choice.click(); }
+        if(choice){ selectChoice(choice, { silent: true }); }
         showStep(1);
       },
-      refresh: function(){ updateProgress(); nextBtn.textContent = (current === steps.length - 1) ? t("sim.s5.cta") : t("sim.nav.next"); }
+      refresh: function(){
+        updateProgress();
+        nextBtn.textContent = (current === steps.length - 1) ? t("sim.s5.cta") : t("sim.nav.next");
+        if(successPanel.classList.contains("is-active")){ buildRecap(); buildEstimate(); }
+      }
     };
 
     showStep(0);
@@ -325,13 +503,21 @@
 
   /* ---------- Intro carousel (hero / objectif / positionnement) ---------- */
   function initCarousel(){
+    var section = document.querySelector(".intro-carousel");
     var track = document.querySelector(".carousel-track");
-    if(!track) return;
+    if(!track || !section) return;
     var slides = Array.prototype.slice.call(track.querySelectorAll(".carousel-slide"));
     var dots = Array.prototype.slice.call(document.querySelectorAll(".carousel-dot"));
     var prevBtn = document.querySelector(".carousel-arrow--prev");
     var nextBtn = document.querySelector(".carousel-arrow--next");
+    var hint = document.querySelector(".carousel-hint");
     if(!slides.length) return;
+
+    var AUTOPLAY_MS = 3000;
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var inView = false;
+    var userInteracted = false;
+    var timer = null;
 
     function activeIndex(){
       var w = track.clientWidth || 1;
@@ -343,9 +529,29 @@
       if(prevBtn) prevBtn.classList.toggle("is-disabled", idx === 0);
       if(nextBtn) nextBtn.classList.toggle("is-disabled", idx === slides.length - 1);
     }
-    function goTo(i){
-      i = Math.max(0, Math.min(slides.length - 1, i));
+    function goTo(i, silent){
+      i = ((i % slides.length) + slides.length) % slides.length; // wrap around, loop
       track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+      if(!silent) hideHint();
+    }
+    function hideHint(){
+      if(hint && !userInteracted){
+        userInteracted = true;
+        hint.classList.add("is-hidden");
+      }
+    }
+
+    function stopAutoplay(){
+      if(timer){ clearInterval(timer); timer = null; }
+    }
+    function startAutoplay(){
+      stopAutoplay();
+      if(reduceMotion) return; // respect vestibular/motion preferences
+      timer = setInterval(function(){
+        if(inView && document.visibilityState === "visible"){
+          goTo(activeIndex() + 1, true);
+        }
+      }, AUTOPLAY_MS);
     }
 
     var ticking = false;
@@ -359,7 +565,25 @@
     dots.forEach(function(d, i){ d.addEventListener("click", function(){ goTo(i); }); });
     if(prevBtn) prevBtn.addEventListener("click", function(){ goTo(activeIndex() - 1); });
     if(nextBtn) nextBtn.addEventListener("click", function(){ goTo(activeIndex() + 1); });
-    window.addEventListener("resize", function(){ goTo(activeIndex()); });
+    track.addEventListener("pointerdown", hideHint, { passive: true });
+    track.addEventListener("touchstart", hideHint, { passive: true });
+    window.addEventListener("resize", function(){ goTo(activeIndex(), true); });
+    document.addEventListener("visibilitychange", function(){
+      if(document.visibilityState === "visible" && inView) startAutoplay(); else stopAutoplay();
+    });
+
+    if("IntersectionObserver" in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          inView = entry.isIntersecting;
+          if(inView) startAutoplay(); else stopAutoplay();
+        });
+      }, { threshold: 0.4 });
+      io.observe(section);
+    } else {
+      inView = true;
+      startAutoplay();
+    }
 
     update();
   }

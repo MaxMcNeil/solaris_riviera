@@ -16,6 +16,7 @@ window.SOLARIS_I18N = {
     "nav.reviews": "Avis clients",
     "nav.faq": "FAQ",
     "header.tagline": "ÉNERGIE • SÉCURITÉ • DOMOTIQUE",
+    "carousel.hint": "Faites glisser pour découvrir",
     "header.call": "Appeler SOLARIS",
     "header.cta": "Étudier mon projet",
     "mobile.call": "Appeler",
@@ -107,7 +108,7 @@ window.SOLARIS_I18N = {
     "sim.s4.sub": "Étape 4 sur 5",
     "sim.s4.label": "Adresse du logement",
     "sim.s4.placeholder": "Rue, ville, code postal",
-    "sim.s4.note": "Cette information permet d'étudier les caractéristiques du projet et, lorsque pertinent, l'ensoleillement.",
+    "sim.s4.note": "Cette adresse nous permet d'estimer l'exposition au soleil de votre toiture — un facteur clé qui influence le coût de l'installation et les gains estimés.",
 
     "sim.s5.title": "Comment vous contacter ?",
     "sim.s5.sub": "Étape 5 sur 5",
@@ -129,6 +130,9 @@ window.SOLARIS_I18N = {
     "sim.recap.goal": "Objectif",
     "sim.recap.budget": "Consommation",
     "sim.recap.address": "Adresse",
+    "sim.estimate.title": "Gain annuel estimé",
+    "sim.estimate.disclaimer": "Estimation indicative à partir de projets comparables — le chiffre définitif sera déterminé lors de l'étude gratuite, en tenant compte de l'exposition de votre toiture.",
+    "sim.estimate.unknown": "Indiquez-nous votre consommation lors de l'étude pour recevoir un chiffrage précis.",
 
     "why.eyebrow": "Pourquoi SOLARIS",
     "why.title": "Pourquoi faire appel à SOLARIS ?",
@@ -218,9 +222,10 @@ window.SOLARIS_I18N = {
     "footer.contact_whatsapp": "WhatsApp",
     "footer.rights": "© " + new Date().getFullYear() + " SOLARIS. Tous droits réservés.",
 
-    "cookie.text": "Ce site utilise des cookies pour mesurer son audience et améliorer votre navigation. Consultez notre politique de confidentialité.",
+    "cookie.text": "Ce site utilise des cookies pour mesurer son audience. Sans réponse de votre part, aucun cookie non essentiel n'est activé — vous pouvez décider à tout moment via l'icône 🍪.",
     "cookie.accept": "Accepter",
     "cookie.decline": "Refuser",
+    "cookie.manage": "Gérer les cookies",
 
     "pv.eyebrow": "Photovoltaïque",
     "pv.title": "Produisez votre propre énergie",
@@ -308,6 +313,7 @@ window.SOLARIS_I18N = {
     "nav.reviews": "Reviews",
     "nav.faq": "FAQ",
     "header.tagline": "ENERGY • SECURITY • SMART HOME",
+    "carousel.hint": "Swipe to explore",
     "header.call": "Call SOLARIS",
     "header.cta": "Get my study",
     "mobile.call": "Call",
@@ -399,7 +405,7 @@ window.SOLARIS_I18N = {
     "sim.s4.sub": "Step 4 of 5",
     "sim.s4.label": "Property address",
     "sim.s4.placeholder": "Street, city, postcode",
-    "sim.s4.note": "This helps us study the project's characteristics and, where relevant, sun exposure.",
+    "sim.s4.note": "This address helps us estimate your roof's sun exposure — a key factor that affects installation cost and expected savings.",
 
     "sim.s5.title": "How can we reach you?",
     "sim.s5.sub": "Step 5 of 5",
@@ -421,6 +427,9 @@ window.SOLARIS_I18N = {
     "sim.recap.goal": "Goal",
     "sim.recap.budget": "Energy spend",
     "sim.recap.address": "Address",
+    "sim.estimate.title": "Estimated annual savings",
+    "sim.estimate.disclaimer": "Indicative estimate based on comparable projects — the exact figure will be confirmed during the free study, based on your roof's sun exposure.",
+    "sim.estimate.unknown": "Tell us your energy use during the study to get a precise figure.",
 
     "why.eyebrow": "Why SOLARIS",
     "why.title": "Why choose SOLARIS?",
@@ -510,9 +519,10 @@ window.SOLARIS_I18N = {
     "footer.contact_whatsapp": "WhatsApp",
     "footer.rights": "© " + new Date().getFullYear() + " SOLARIS. All rights reserved.",
 
-    "cookie.text": "This site uses cookies to measure traffic and improve your browsing experience. See our privacy policy.",
+    "cookie.text": "This site uses cookies to measure traffic. If you don't respond, no non-essential cookie is enabled — you can decide anytime via the 🍪 icon.",
     "cookie.accept": "Accept",
     "cookie.decline": "Decline",
+    "cookie.manage": "Manage cookies",
 
     "pv.eyebrow": "Solar power",
     "pv.title": "Produce your own energy",
@@ -600,6 +610,7 @@ window.SOLARIS_I18N = {
     "nav.reviews": "Recensioni",
     "nav.faq": "FAQ",
     "header.tagline": "ENERGIA • SICUREZZA • DOMOTICA",
+    "carousel.hint": "Scorri per scoprire",
     "header.call": "Chiama SOLARIS",
     "header.cta": "Richiedi il mio studio",
     "mobile.call": "Chiama",
@@ -691,7 +702,7 @@ window.SOLARIS_I18N = {
     "sim.s4.sub": "Passo 4 di 5",
     "sim.s4.label": "Indirizzo dell'abitazione",
     "sim.s4.placeholder": "Via, città, CAP",
-    "sim.s4.note": "Questa informazione permette di studiare le caratteristiche del progetto e, quando utile, l'esposizione solare.",
+    "sim.s4.note": "Questo indirizzo ci permette di stimare l'esposizione al sole del tuo tetto — un fattore chiave che incide sul costo dell'impianto e sul risparmio stimato.",
 
     "sim.s5.title": "Come possiamo contattarti?",
     "sim.s5.sub": "Passo 5 di 5",
@@ -713,6 +724,9 @@ window.SOLARIS_I18N = {
     "sim.recap.goal": "Obiettivo",
     "sim.recap.budget": "Consumo",
     "sim.recap.address": "Indirizzo",
+    "sim.estimate.title": "Risparmio annuo stimato",
+    "sim.estimate.disclaimer": "Stima indicativa basata su progetti comparabili — la cifra definitiva sarà determinata durante lo studio gratuito, in base all'esposizione al sole del tuo tetto.",
+    "sim.estimate.unknown": "Indicaci il tuo consumo durante lo studio per ricevere una cifra precisa.",
 
     "why.eyebrow": "Perché SOLARIS",
     "why.title": "Perché scegliere SOLARIS?",
@@ -802,9 +816,10 @@ window.SOLARIS_I18N = {
     "footer.contact_whatsapp": "WhatsApp",
     "footer.rights": "© " + new Date().getFullYear() + " SOLARIS. Tutti i diritti riservati.",
 
-    "cookie.text": "Questo sito utilizza cookie per misurare il traffico e migliorare la tua navigazione. Consulta la nostra informativa sulla privacy.",
+    "cookie.text": "Questo sito utilizza cookie per misurare il traffico. Se non rispondi, nessun cookie non essenziale viene attivato — puoi decidere in qualsiasi momento tramite l'icona 🍪.",
     "cookie.accept": "Accetta",
     "cookie.decline": "Rifiuta",
+    "cookie.manage": "Gestisci cookie",
 
     "pv.eyebrow": "Fotovoltaico",
     "pv.title": "Produci la tua energia",
