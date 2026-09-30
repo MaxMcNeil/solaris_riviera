@@ -184,6 +184,21 @@
   function waLink(message){
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
   }
+  function isMobileUA(){
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+  // On mobile, a new-tab window.open() often just opens a silent background
+  // tab instead of handing off to the WhatsApp app — navigating the current
+  // tab is what reliably triggers the OS-level app link. On desktop there is
+  // no app to hand off to, so a new tab (WhatsApp Web) is the better choice,
+  // since it keeps the site open behind it.
+  function openWhatsApp(url){
+    if(isMobileUA()){
+      window.location.href = url;
+    } else {
+      window.open(url, "_blank", "noopener");
+    }
+  }
 
   function initWhatsAppCtas(){
     document.querySelectorAll("[data-wa-cta]").forEach(function(el){
@@ -195,7 +210,7 @@
       el.setAttribute("href", "#");
       el.addEventListener("click", function(ev){
         ev.preventDefault();
-        window.open(waLink(messages[currentLang] || messages.fr), "_blank", "noopener");
+        openWhatsApp(waLink(messages[currentLang] || messages.fr));
       });
     });
     document.querySelectorAll("[data-wa-call]").forEach(function(el){
@@ -206,7 +221,7 @@
       el.setAttribute("href", "#");
       el.addEventListener("click", function(ev){
         ev.preventDefault();
-        window.open(waLink(messages[currentLang] || messages.fr), "_blank", "noopener");
+        openWhatsApp(waLink(messages[currentLang] || messages.fr));
       });
     });
   }
@@ -416,20 +431,27 @@
       root.querySelector(".sim-progress").style.display = "none";
       successPanel.classList.add("is-active");
       completed = true;
-
-      // Open WhatsApp immediately — no extra click required. This still runs
-      // synchronously inside the button's click handler, so browsers treat
-      // it as a direct result of the user's action and won't block it.
-      window.open(waLink(buildWaMessage()), "_blank", "noopener");
       sendLead("completed", snapshotState());
+
+      // Hand off to WhatsApp automatically — no extra click required.
+      // Desktop: open a new tab immediately (WhatsApp Web), the site stays open.
+      // Mobile: a new-tab window.open() often just opens silently in the
+      // background instead of switching to the WhatsApp app, so we navigate
+      // the current tab instead — the reliable way to trigger the OS app
+      // link. A short pause first lets the visitor actually see the
+      // confirmation screen (and their estimate) before the handoff.
+      var waUrl = waLink(buildWaMessage());
+      if(isMobileUA()){
+        window.setTimeout(function(){ window.location.href = waUrl; }, 900);
+      } else {
+        window.open(waUrl, "_blank", "noopener");
+      }
 
       var waBtn = successPanel.querySelector("[data-wa-submit]");
       if(waBtn){
-        // Kept as a manual fallback in case the automatic opening was blocked
-        // by the browser or the visitor closed the WhatsApp tab by mistake.
-        waBtn.onclick = function(){
-          window.open(waLink(buildWaMessage()), "_blank", "noopener");
-        };
+        // Kept as a manual fallback in case the automatic handoff didn't
+        // fire (e.g. the visitor navigated back before the redirect ran).
+        waBtn.onclick = function(){ openWhatsApp(waLink(buildWaMessage())); };
       }
     }
 
@@ -513,7 +535,7 @@
     var hint = document.querySelector(".carousel-hint");
     if(!slides.length) return;
 
-    var AUTOPLAY_MS = 3000;
+    var AUTOPLAY_MS = 2200;
     var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var inView = false;
     var userInteracted = false;
@@ -588,6 +610,130 @@
     update();
   }
 
+  /* ---------- SOLARIS Connect — fast 2-step conversion form ---------- */
+  function initConnectForm(){
+    var root = document.querySelector(".fast-form");
+    if(!root) return;
+
+    var steps = Array.prototype.slice.call(root.querySelectorAll(".sim-step"));
+    var progressItems = Array.prototype.slice.call(root.querySelectorAll(".sim-progress i"));
+    var successPanel = root.querySelector(".sim-success");
+    var backBtn = root.querySelector(".sim-back");
+    var nextBtn = root.querySelector(".sim-next");
+    var current = 0;
+    var autoAdvanceTimer = null;
+    var started = false;
+    var completed = false;
+
+    var state = { target: null, firstname: "", phone: "" };
+
+    var TARGET_LABELS = { home: "connect.form.s1.o1", car: "connect.form.s1.o2", office: "connect.form.s1.o3", all: "connect.form.s1.o4" };
+    function displayTarget(){
+      return state.target && TARGET_LABELS[state.target] ? t(TARGET_LABELS[state.target]) : "—";
+    }
+
+    function updateProgress(){
+      progressItems.forEach(function(el, i){
+        el.classList.toggle("is-done", i < current);
+        el.classList.toggle("is-active", i === current);
+      });
+    }
+    function showStep(i){
+      steps.forEach(function(s, idx){ s.classList.toggle("is-active", idx === i); });
+      current = i;
+      updateProgress();
+      backBtn.disabled = (i === 0);
+      nextBtn.textContent = (i === steps.length - 1) ? t("connect.form.cta") : t("sim.nav.next");
+    }
+    function canAdvance(i){
+      if(i === 0) return !!state.target;
+      if(i === 1) return !!(state.firstname && state.phone);
+      return true;
+    }
+    function advance(){
+      if(!canAdvance(current)){
+        var activeStep = root.querySelectorAll(".sim-step.is-active")[0];
+        activeStep.classList.remove("shake");
+        void activeStep.offsetWidth;
+        activeStep.classList.add("shake");
+        return;
+      }
+      if(current === steps.length - 1){ submit(); return; }
+      showStep(current + 1);
+    }
+    function selectChoice(choice){
+      var group = choice.closest(".choice-grid");
+      var field = group.getAttribute("data-field");
+      group.querySelectorAll(".choice").forEach(function(c){ c.classList.remove("is-selected"); c.setAttribute("aria-checked","false"); });
+      choice.classList.add("is-selected");
+      choice.setAttribute("aria-checked","true");
+      state[field] = choice.getAttribute("data-value");
+      started = true;
+      window.clearTimeout(autoAdvanceTimer);
+      autoAdvanceTimer = window.setTimeout(advance, 380);
+    }
+    root.querySelectorAll(".choice").forEach(function(choice){
+      choice.addEventListener("click", function(){ selectChoice(choice); });
+      choice.addEventListener("keydown", function(e){
+        if(e.key === "Enter" || e.key === " " || e.key === "Spacebar"){ e.preventDefault(); selectChoice(choice); }
+      });
+    });
+    root.querySelectorAll("input[data-field]").forEach(function(input){
+      input.addEventListener("input", function(){
+        state[input.getAttribute("data-field")] = input.value.trim();
+        started = true;
+      });
+    });
+
+    function buildMessage(){
+      return currentLang === "fr" ? [
+        "Bonjour SOLARIS, je souhaite activer SOLARIS Connect :",
+        "Je veux connecter : " + displayTarget(),
+        "Prénom : " + (state.firstname || "—"),
+        "Téléphone : " + (state.phone || "—")
+      ].join("\n") : [
+        "Hello SOLARIS, I'd like to activate SOLARIS Connect:",
+        "I want to connect: " + displayTarget(),
+        "First name: " + (state.firstname || "—"),
+        "Phone: " + (state.phone || "—")
+      ].join("\n");
+    }
+    function snapshotState(){
+      return { type: "connect", goal: state.target || "", budget: "", address: "",
+        firstname: state.firstname, lastname: "", phone: state.phone, email: "",
+        step: current + 1, totalSteps: steps.length };
+    }
+
+    function submit(){
+      steps.forEach(function(s){ s.classList.remove("is-active"); });
+      root.querySelector(".sim-nav").style.display = "none";
+      root.querySelector(".sim-progress").style.display = "none";
+      successPanel.classList.add("is-active");
+      completed = true;
+      sendLead("completed", snapshotState());
+
+      var waUrl = waLink(buildMessage());
+      if(isMobileUA()){
+        window.setTimeout(function(){ window.location.href = waUrl; }, 900);
+      } else {
+        window.open(waUrl, "_blank", "noopener");
+      }
+    }
+
+    nextBtn.addEventListener("click", advance);
+    backBtn.addEventListener("click", function(){ if(current > 0) showStep(current - 1); });
+
+    function handleLeaveIfAbandoned(){
+      if(started && !completed) sendLead("abandoned", snapshotState(), true);
+    }
+    document.addEventListener("visibilitychange", function(){
+      if(document.visibilityState === "hidden") handleLeaveIfAbandoned();
+    });
+    window.addEventListener("pagehide", handleLeaveIfAbandoned);
+
+    showStep(0);
+  }
+
   document.addEventListener("DOMContentLoaded", function(){
     applyI18n();
     initMobileNav();
@@ -596,6 +742,7 @@
     initWhatsAppCtas();
     initObjectiveCards();
     initSimulator();
+    initConnectForm();
     initActiveNav();
     initCarousel();
   });
