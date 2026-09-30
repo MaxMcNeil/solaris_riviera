@@ -221,6 +221,11 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
 
+    <div class="carousel-hint" aria-hidden="true">
+      <svg width="20" height="14" viewBox="0 0 32 22" fill="none"><path d="M2 11h28M2 11l7-7M2 11l7 7M30 11l-7-7M30 11l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-i18n="carousel.hint">Faites glisser pour découvrir</span>
+    </div>
+
     <div class="carousel-dots" role="tablist" aria-label="Diapositives">
       <button type="button" class="carousel-dot" role="tab" aria-label="1"></button>
       <button type="button" class="carousel-dot" role="tab" aria-label="2"></button>
@@ -243,6 +248,13 @@
           <p class="benefit" data-i18n="offer1.benefit">Réduire votre dépendance au réseau et augmenter l'utilisation de votre propre production.</p>
           <a href="#simulateur" class="btn btn-ghost" data-i18n="offer1.cta">Étudier mon projet</a>
         </div>
+        <div class="offer">
+          <span class="tag" data-i18n="offer2.tag">02 — Sérénité</span>
+          <h3 data-i18n="offer2.title">Protéger et surveiller</h3>
+          <p class="offer-sub" data-i18n="offer2.sub">Alarme + vidéosurveillance + contrôle à distance</p>
+          <p class="benefit" data-i18n="offer2.benefit">Surveiller votre habitation et recevoir les informations importantes directement sur votre smartphone.</p>
+          <a href="#simulateur" class="btn btn-ghost" data-i18n="offer2.cta">Sécuriser mon habitation</a>
+        </div>
         <div class="offer offer--featured">
           <span class="offer-badge" data-i18n="offer3.badge">Solution SOLARIS</span>
           <span class="tag" data-i18n="offer3.tag">03 — Intégral</span>
@@ -250,13 +262,6 @@
           <p class="offer-sub" data-i18n="offer3.sub">Photovoltaïque + sécurité + domotique</p>
           <p class="benefit" data-i18n="offer3.benefit">Une approche globale pour produire votre énergie, protéger votre habitation et automatiser vos usages.</p>
           <a href="#simulateur" class="btn btn-gold" data-i18n="offer3.cta">Construire ma solution</a>
-        </div>
-        <div class="offer">
-          <span class="tag" data-i18n="offer2.tag">02 — Sérénité</span>
-          <h3 data-i18n="offer2.title">Protéger et surveiller</h3>
-          <p class="offer-sub" data-i18n="offer2.sub">Alarme + vidéosurveillance + contrôle à distance</p>
-          <p class="benefit" data-i18n="offer2.benefit">Surveiller votre habitation et recevoir les informations importantes directement sur votre smartphone.</p>
-          <a href="#simulateur" class="btn btn-ghost" data-i18n="offer2.cta">Sécuriser mon habitation</a>
         </div>
       </div>
     </div>
@@ -279,35 +284,35 @@
         <div class="sim-step is-active" data-step="0">
           <h3 data-i18n="sim.s1.title">Quel type de projet ?</h3>
           <p class="step-sub" data-i18n="sim.s1.sub">Étape 1 sur 5</p>
-          <div class="choice-grid" data-field="type">
-            <div class="choice" data-value="Maison individuelle"><span class="dot"></span><span data-i18n="sim.s1.o1">Maison individuelle</span></div>
-            <div class="choice" data-value="Appartement"><span class="dot"></span><span data-i18n="sim.s1.o2">Appartement</span></div>
-            <div class="choice" data-value="Local professionnel"><span class="dot"></span><span data-i18n="sim.s1.o3">Local professionnel</span></div>
-            <div class="choice" data-value="Autre"><span class="dot"></span><span data-i18n="sim.s1.o4">Autre</span></div>
+          <div class="choice-grid" data-field="type" role="radiogroup">
+            <div class="choice" data-value="individual" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s1.o1">Maison individuelle</span></div>
+            <div class="choice" data-value="apartment" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s1.o2">Appartement</span></div>
+            <div class="choice" data-value="business" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s1.o3">Local professionnel</span></div>
+            <div class="choice" data-value="other" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s1.o4">Autre</span></div>
           </div>
         </div>
 
         <div class="sim-step" data-step="1">
           <h3 data-i18n="sim.s2.title">Quel est votre objectif ?</h3>
           <p class="step-sub" data-i18n="sim.s2.sub">Étape 2 sur 5</p>
-          <div class="choice-grid" data-field="goal">
-            <div class="choice" data-value="Réduire ma facture"><span class="dot"></span><span data-i18n="sim.s2.o1">Réduire ma facture</span></div>
-            <div class="choice" data-value="Produire ma propre énergie"><span class="dot"></span><span data-i18n="sim.s2.o2">Produire ma propre énergie</span></div>
-            <div class="choice" data-value="Sécuriser mon habitation"><span class="dot"></span><span data-i18n="sim.s2.o3">Sécuriser mon habitation</span></div>
-            <div class="choice" data-value="Automatiser mes équipements"><span class="dot"></span><span data-i18n="sim.s2.o4">Automatiser mes équipements</span></div>
-            <div class="choice" data-value="Solution complète"><span class="dot"></span><span data-i18n="sim.s2.o5">Solution complète</span></div>
+          <div class="choice-grid" data-field="goal" role="radiogroup">
+            <div class="choice" data-value="bill" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s2.o1">Réduire ma facture</span></div>
+            <div class="choice" data-value="produce" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s2.o2">Produire ma propre énergie</span></div>
+            <div class="choice" data-value="secure" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s2.o3">Sécuriser mon habitation</span></div>
+            <div class="choice" data-value="automate" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s2.o4">Automatiser mes équipements</span></div>
+            <div class="choice" data-value="all" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s2.o5">Solution complète</span></div>
           </div>
         </div>
 
         <div class="sim-step" data-step="2">
           <h3 data-i18n="sim.s3.title">Quel est votre niveau de consommation ?</h3>
           <p class="step-sub" data-i18n="sim.s3.sub">Étape 3 sur 5</p>
-          <div class="choice-grid" data-field="budget">
-            <div class="choice" data-value="Moins de 100 €/mois"><span class="dot"></span><span data-i18n="sim.s3.o1">Moins de 100 €/mois</span></div>
-            <div class="choice" data-value="100 à 200 €/mois"><span class="dot"></span><span data-i18n="sim.s3.o2">100 à 200 €/mois</span></div>
-            <div class="choice" data-value="200 à 300 €/mois"><span class="dot"></span><span data-i18n="sim.s3.o3">200 à 300 €/mois</span></div>
-            <div class="choice" data-value="Plus de 300 €/mois"><span class="dot"></span><span data-i18n="sim.s3.o4">Plus de 300 €/mois</span></div>
-            <div class="choice" data-value="Je ne sais pas"><span class="dot"></span><span data-i18n="sim.s3.o5">Je ne sais pas</span></div>
+          <div class="choice-grid" data-field="budget" role="radiogroup">
+            <div class="choice" data-value="low" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s3.o1">Moins de 100 €/mois</span></div>
+            <div class="choice" data-value="mid" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s3.o2">100 à 200 €/mois</span></div>
+            <div class="choice" data-value="high" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s3.o3">200 à 300 €/mois</span></div>
+            <div class="choice" data-value="veryhigh" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s3.o4">Plus de 300 €/mois</span></div>
+            <div class="choice" data-value="unknown" role="radio" tabindex="0" aria-checked="false"><span class="dot"></span><span data-i18n="sim.s3.o5">Je ne sais pas</span></div>
           </div>
         </div>
 
@@ -358,6 +363,11 @@
           </div>
           <h3 data-i18n="sim.success.title">Votre demande est bien enregistrée.</h3>
           <p data-i18n="sim.success.text">Un expert SOLARIS étudie votre projet et vous contacte sur WhatsApp pour la suite.</p>
+          <div class="estimate-box" style="display:none">
+            <span class="estimate-label" data-i18n="sim.estimate.title">Gain annuel estimé</span>
+            <div class="estimate-value"></div>
+            <p class="estimate-disclaimer" data-i18n="sim.estimate.disclaimer">Estimation indicative à partir de projets comparables — le chiffre définitif sera déterminé lors de l'étude gratuite, en tenant compte de l'exposition de votre toiture.</p>
+          </div>
           <div class="recap"></div>
           <div class="hero-actions" style="justify-content:center">
             <button type="button" class="btn btn-gold" data-wa-submit>🟢 <span data-i18n="sim.success.cta">Ouvrir WhatsApp</span></button>
@@ -545,6 +555,7 @@
     <button type="button" class="btn btn-gold" data-cookie="accepted" data-i18n="cookie.accept">Accepter</button>
   </div>
 </div>
+<button type="button" class="cookie-reopen" aria-label="Gérer les cookies" data-i18n-aria="cookie.manage" title="Cookies">🍪</button>
 
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
