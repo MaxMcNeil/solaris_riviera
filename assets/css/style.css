@@ -1142,23 +1142,23 @@ h1,h2,h3,h4,p{ margin:0; }
 
 .cookie-reopen{
   position: fixed;
-  left: 14px;
+  right: 14px;
   bottom: calc(14px + var(--safe-b));
-  z-index: 75;
-  width: 38px; height: 38px;
+  z-index: 85;
+  width: 44px; height: 44px;
   border-radius: 50%;
-  background: var(--night-raised);
-  border: 1px solid var(--line);
-  color: var(--ink-dim);
-  font-size: 17px;
+  background: var(--night);
+  border: 1.5px solid var(--gold-soft);
+  color: var(--ink);
+  font-size: 19px;
   display:none;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  box-shadow: var(--shadow-1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.55), 0 0 0 4px rgba(5,7,12,0.7);
 }
 .cookie-reopen.is-visible{ display:flex; }
-@media (max-width: 979px){ .cookie-reopen{ bottom: calc(84px + var(--safe-b)); } }
+@media (max-width: 979px){ .cookie-reopen{ bottom: calc(88px + var(--safe-b)); } }
 
 /* =========================================================
    Utilities
