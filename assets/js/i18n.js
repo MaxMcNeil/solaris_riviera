@@ -274,6 +274,8 @@ window.SOLARIS_I18N = {
     "privacy.title": "Politique de confidentialité",
 
     "back_home": "Retour à l'accueil",
+    "notfound.title": "Page introuvable",
+    "notfound.text": "Cette page n'existe pas ou a été déplacée.",
 
     "connect.badge": "Nouveau",
     "connect.teaser.title": "Voyez, entendez, contrôlez tout, partout.",
@@ -633,6 +635,8 @@ window.SOLARIS_I18N = {
     "privacy.title": "Privacy policy",
 
     "back_home": "Back to home",
+    "notfound.title": "Page not found",
+    "notfound.text": "This page doesn't exist or has been moved.",
 
     "connect.badge": "New",
     "connect.teaser.title": "See, hear, control everything, everywhere.",
@@ -992,6 +996,8 @@ window.SOLARIS_I18N = {
     "privacy.title": "Informativa sulla privacy",
 
     "back_home": "Torna alla home",
+    "notfound.title": "Pagina non trovata",
+    "notfound.text": "Questa pagina non esiste o è stata spostata.",
 
     "connect.badge": "Novità",
     "connect.teaser.title": "Vedi, ascolta, controlla tutto, ovunque.",

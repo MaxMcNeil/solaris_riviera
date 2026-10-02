@@ -185,7 +185,15 @@
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
   }
   function isMobileUA(){
-    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    // User-Agent strings are increasingly trimmed by browsers (Chrome's
+    // "UA reduction"), so UA sniffing alone can miss real mobile devices.
+    // Back it up with touch + coarse-pointer + viewport-width signals.
+    var uaMatch = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var uaDataMobile = !!(navigator.userAgentData && navigator.userAgentData.mobile);
+    var touchCapable = (navigator.maxTouchPoints || 0) > 0 ||
+      (window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+    var narrowViewport = window.innerWidth <= 820;
+    return uaMatch || uaDataMobile || (touchCapable && narrowViewport);
   }
   // On mobile, a new-tab window.open() often just opens a silent background
   // tab instead of handing off to the WhatsApp app — navigating the current
@@ -205,7 +213,8 @@
       var msgKey = el.getAttribute("data-wa-cta");
       var messages = {
         fr: "Bonjour SOLARIS, je souhaite être contacté au sujet d'un projet (" + (msgKey || "site web") + ").",
-        en: "Hello SOLARIS, I'd like to be contacted about a project (" + (msgKey || "website") + ")."
+        en: "Hello SOLARIS, I'd like to be contacted about a project (" + (msgKey || "website") + ").",
+        it: "Ciao SOLARIS, vorrei essere contattato per un progetto (" + (msgKey || "sito web") + ")."
       };
       el.setAttribute("href", "#");
       el.addEventListener("click", function(ev){
@@ -216,7 +225,8 @@
     document.querySelectorAll("[data-wa-call]").forEach(function(el){
       var messages = {
         fr: "Bonjour SOLARIS, je souhaite parler à un expert.",
-        en: "Hello SOLARIS, I'd like to talk to an expert."
+        en: "Hello SOLARIS, I'd like to talk to an expert.",
+        it: "Ciao SOLARIS, vorrei parlare con un esperto."
       };
       el.setAttribute("href", "#");
       el.addEventListener("click", function(ev){
@@ -351,11 +361,22 @@
     function buildRecap(){
       var recap = root.querySelector(".recap");
       if(!recap) return;
-      recap.innerHTML =
-        "<div><b>" + t("sim.recap.type") + ":</b> " + displayValue("type", state.type) + "</div>" +
-        "<div><b>" + t("sim.recap.goal") + ":</b> " + displayValue("goal", state.goal) + "</div>" +
-        "<div><b>" + t("sim.recap.budget") + ":</b> " + displayValue("budget", state.budget) + "</div>" +
-        "<div><b>" + t("sim.recap.address") + ":</b> " + (state.address || "—") + "</div>";
+      // Built via DOM methods (not innerHTML) so free-text input like the
+      // address field is always treated as plain text, never as markup.
+      recap.textContent = "";
+      [
+        [t("sim.recap.type"), displayValue("type", state.type)],
+        [t("sim.recap.goal"), displayValue("goal", state.goal)],
+        [t("sim.recap.budget"), displayValue("budget", state.budget)],
+        [t("sim.recap.address"), state.address || "—"]
+      ].forEach(function(pair){
+        var row = document.createElement("div");
+        var b = document.createElement("b");
+        b.textContent = pair[0] + ":";
+        row.appendChild(b);
+        row.appendChild(document.createTextNode(" " + pair[1]));
+        recap.appendChild(row);
+      });
     }
 
     // Rough, clearly-labelled indicative ranges (EUR/year) — never a precise
@@ -386,33 +407,47 @@
       if(!est.applicable){ box.style.display = "none"; return; }
       box.style.display = "block";
       if(est.known){
-        valueEl.textContent = est.min + " € – " + est.max + " € / " + (currentLang === "en" ? "yr" : "an");
+        var perYear = { fr: "an", en: "yr", it: "anno" }[currentLang] || "an";
+        valueEl.textContent = est.min + " € – " + est.max + " € / " + perYear;
       } else {
         valueEl.textContent = t("sim.estimate.unknown");
       }
     }
 
     function buildWaMessage(){
-      var lines = currentLang === "fr" ? [
-        "Bonjour SOLARIS, voici ma demande d'étude :",
-        "Type de projet : " + displayValue("type", state.type),
-        "Objectif : " + displayValue("goal", state.goal),
-        "Consommation : " + displayValue("budget", state.budget),
-        "Adresse : " + (state.address || "—"),
-        "Nom : " + (state.firstname || "") + " " + (state.lastname || ""),
-        "Téléphone : " + (state.phone || "—"),
-        "Email : " + (state.email || "—")
-      ] : [
-        "Hello SOLARIS, here is my study request:",
-        "Project type: " + displayValue("type", state.type),
-        "Goal: " + displayValue("goal", state.goal),
-        "Energy spend: " + displayValue("budget", state.budget),
-        "Address: " + (state.address || "—"),
-        "Name: " + (state.firstname || "") + " " + (state.lastname || ""),
-        "Phone: " + (state.phone || "—"),
-        "Email: " + (state.email || "—")
-      ];
-      return lines.join("\n");
+      var templates = {
+        fr: [
+          "Bonjour SOLARIS, voici ma demande d'étude :",
+          "Type de projet : " + displayValue("type", state.type),
+          "Objectif : " + displayValue("goal", state.goal),
+          "Consommation : " + displayValue("budget", state.budget),
+          "Adresse : " + (state.address || "—"),
+          "Nom : " + (state.firstname || "") + " " + (state.lastname || ""),
+          "Téléphone : " + (state.phone || "—"),
+          "Email : " + (state.email || "—")
+        ],
+        en: [
+          "Hello SOLARIS, here is my study request:",
+          "Project type: " + displayValue("type", state.type),
+          "Goal: " + displayValue("goal", state.goal),
+          "Energy spend: " + displayValue("budget", state.budget),
+          "Address: " + (state.address || "—"),
+          "Name: " + (state.firstname || "") + " " + (state.lastname || ""),
+          "Phone: " + (state.phone || "—"),
+          "Email: " + (state.email || "—")
+        ],
+        it: [
+          "Ciao SOLARIS, ecco la mia richiesta di studio:",
+          "Tipo di progetto: " + displayValue("type", state.type),
+          "Obiettivo: " + displayValue("goal", state.goal),
+          "Consumo: " + displayValue("budget", state.budget),
+          "Indirizzo: " + (state.address || "—"),
+          "Nome: " + (state.firstname || "") + " " + (state.lastname || ""),
+          "Telefono: " + (state.phone || "—"),
+          "Email: " + (state.email || "—")
+        ]
+      };
+      return (templates[currentLang] || templates.fr).join("\n");
     }
 
     function snapshotState(){
@@ -564,24 +599,32 @@
     }
 
     function stopAutoplay(){
-      if(timer){ clearInterval(timer); timer = null; }
+      if(timer){ clearTimeout(timer); timer = null; }
     }
     function startAutoplay(){
       stopAutoplay();
       if(reduceMotion) return; // respect vestibular/motion preferences
-      timer = setInterval(function(){
+      var currentSlide = slides[activeIndex()];
+      var duration = (currentSlide && parseInt(currentSlide.getAttribute("data-duration"), 10)) || AUTOPLAY_MS;
+      timer = setTimeout(function(){
         if(inView && document.visibilityState === "visible"){
           goTo(activeIndex() + 1, true);
         }
-      }, AUTOPLAY_MS);
+        startAutoplay(); // reschedule using whichever slide is now active
+      }, duration);
     }
 
     var ticking = false;
+    var settleTimer = null;
     track.addEventListener("scroll", function(){
       if(!ticking){
         window.requestAnimationFrame(function(){ update(); ticking = false; });
         ticking = true;
       }
+      // Once the swipe/scroll settles on a slide, restart autoplay so the
+      // delay always matches whichever slide the visitor actually landed on.
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(function(){ if(inView) startAutoplay(); }, 160);
     }, { passive: true });
 
     dots.forEach(function(d, i){ d.addEventListener("click", function(){ goTo(i); }); });
@@ -686,17 +729,27 @@
     });
 
     function buildMessage(){
-      return currentLang === "fr" ? [
-        "Bonjour SOLARIS, je souhaite activer SOLARIS Connect :",
-        "Je veux connecter : " + displayTarget(),
-        "Prénom : " + (state.firstname || "—"),
-        "Téléphone : " + (state.phone || "—")
-      ].join("\n") : [
-        "Hello SOLARIS, I'd like to activate SOLARIS Connect:",
-        "I want to connect: " + displayTarget(),
-        "First name: " + (state.firstname || "—"),
-        "Phone: " + (state.phone || "—")
-      ].join("\n");
+      var templates = {
+        fr: [
+          "Bonjour SOLARIS, je souhaite activer SOLARIS Connect :",
+          "Je veux connecter : " + displayTarget(),
+          "Prénom : " + (state.firstname || "—"),
+          "Téléphone : " + (state.phone || "—")
+        ],
+        en: [
+          "Hello SOLARIS, I'd like to activate SOLARIS Connect:",
+          "I want to connect: " + displayTarget(),
+          "First name: " + (state.firstname || "—"),
+          "Phone: " + (state.phone || "—")
+        ],
+        it: [
+          "Ciao SOLARIS, vorrei attivare SOLARIS Connect:",
+          "Voglio collegare: " + displayTarget(),
+          "Nome: " + (state.firstname || "—"),
+          "Telefono: " + (state.phone || "—")
+        ]
+      };
+      return (templates[currentLang] || templates.fr).join("\n");
     }
     function snapshotState(){
       return { type: "connect", goal: state.target || "", budget: "", address: "",
