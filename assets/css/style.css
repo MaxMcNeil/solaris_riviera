@@ -398,19 +398,30 @@ h1,h2,h3,h4,p{ margin:0; }
   display:flex;
   justify-content:center;
   align-items:center;
-  gap: 8px;
+  gap: 0;
   padding: 2px 0 30px;
 }
 .carousel-dot{
+  /* Visible dot is small, but the tappable area is a full 44x24px target —
+     an 8x8px hit area is far too small to reliably tap on a touchscreen. */
+  width: 28px; height: 32px;
+  padding:0;
+  border:none;
+  background:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.carousel-dot::after{
+  content:"";
+  display:block;
   width:8px; height:8px;
   border-radius: 999px;
   background: var(--line);
-  border:none;
-  padding:0;
-  cursor:pointer;
   transition: all .25s ease;
 }
-.carousel-dot.is-active{ width:26px; background: var(--gold); }
+.carousel-dot.is-active::after{ width:26px; background: var(--gold); }
 
 .carousel-arrow{
   position:absolute;
@@ -427,8 +438,10 @@ h1,h2,h3,h4,p{ margin:0; }
   z-index:5;
   display:none;
 }
-.carousel-arrow--prev{ left:14px; }
-.carousel-arrow--next{ right:14px; }
+/* Stay close to the centered slide content instead of drifting to the
+   screen edges on very wide / ultra-wide desktop monitors. */
+.carousel-arrow--prev{ left: max(14px, calc((100% - 900px) / 2 - 50px)); }
+.carousel-arrow--next{ right: max(14px, calc((100% - 900px) / 2 - 50px)); }
 .carousel-arrow.is-disabled{ opacity:.25; pointer-events:none; }
 @media (min-width: 860px){ .carousel-arrow{ display:flex; } }
 
